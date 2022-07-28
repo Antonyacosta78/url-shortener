@@ -21,9 +21,9 @@ app.post("/short", (req, res) => {
 
 app.get("/l/:hash", (req, res) => {
     const { hash } = req.params
-    if(!hash) return res.sendStatus(400) // 
+    if(!hash) return res.sendStatus(400) // HTTP_BAD_REQUEST
+
     const record = database.get(hash)
-    
     if(!record) return res.sendStatus(404) // HTTP_NOT_FOUND
 
     return res.send(record)
