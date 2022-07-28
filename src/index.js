@@ -3,6 +3,7 @@ const db = require("./database")
 
 const app = express()
 
+const PORT = 3000
 const URL_LENGTH = 8
 
 app.post("/short", (req, res) => {
@@ -22,4 +23,8 @@ app.get("/l/:hash", (req, res) => {
     if(!record) return res.sendStatus(404) // HTTP_NOT_FOUND
 
     return res.send(record)
+})
+
+app.listen(PORT, () => {
+    console.log("app listening to port " + port)
 })
