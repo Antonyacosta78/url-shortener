@@ -1,10 +1,13 @@
 const express = require("express")
-const db = require("./database")
+const bodyParser = require("body-parser")
+const database = require("./database")
 
 const app = express()
 
 const PORT = 3000
 const URL_LENGTH = 8
+
+app.use(bodyParser.json())
 
 app.post("/short", (req, res) => {
     const { url } = req.body
@@ -26,5 +29,5 @@ app.get("/l/:hash", (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log("app listening to port " + port)
+    console.log("app listening to port " + PORT)
 })
