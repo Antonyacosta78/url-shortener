@@ -7,7 +7,7 @@ const app = express()
 // TODO move to .env
 const PORT = 3000
 const URL_LENGTH = 8
-const BASE_URL = "http://localhost:" + PORT
+const BASE_URL = "http://localhost:" + PORT + "/"
 
 app.use(bodyParser.json())
 
@@ -18,7 +18,7 @@ app.post("/short", (req, res) => {
 
     database.save(hash, url)
 
-    return res.status(201).send(hash).end() // HTTP_CREATED
+    return res.status(201).send(BASE_URL + hash).end() // HTTP_CREATED
 })
 
 app.get("/l/:hash", (req, res) => {
@@ -28,9 +28,9 @@ app.get("/l/:hash", (req, res) => {
     const record = database.get(hash)
     if(!record) return res.sendStatus(404) // HTTP_NOT_FOUND
 
-    return res.status(301).redirect(record) // HTTP_MOVED_PERMANENTLY
+    return res.status(301).redirect(BASE_URL + record) // HTTP_MOVED_PERMANENTLY
 })
 
 app.listen(PORT, () => {
-    console.log("app listening to port " + PORT)
+    console.log("App listening to port " + PORT)
 })
