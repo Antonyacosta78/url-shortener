@@ -11,6 +11,8 @@ const BASE_URL = "http://localhost:" + PORT + "/"
 
 app.use(bodyParser.json())
 
+app.get("/healthcheck", (req, res) => res.send("Uptime: " + process.uptime()))
+
 app.post("/short", (req, res) => {
     const { url } = req.body
     const hash = Buffer.from((Math.random() * 1000).toString())
@@ -18,7 +20,7 @@ app.post("/short", (req, res) => {
 
     database.save(hash, url)
 
-    return res.status(201).send(BASE_URL + hash).end() // HTTP_CREATED
+    return res.status(201).send(BASE_URL + "l/"+ hash).end() // HTTP_CREATED
 })
 
 app.get("/l/:hash", (req, res) => {
@@ -28,7 +30,7 @@ app.get("/l/:hash", (req, res) => {
     const record = database.get(hash)
     if(!record) return res.sendStatus(404) // HTTP_NOT_FOUND
 
-    return res.status(301).redirect(BASE_URL + record) // HTTP_MOVED_PERMANENTLY
+    return res.status(301).redirect(record) // HTTP_MOVED_PERMANENTLY
 })
 
 app.listen(PORT, () => {
